@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <form action="" method="post" id="form">
+        <input type="text" id="searchInput">
+        <button id="searchButton">Pesquisar</button>
+    </form>
+
+    <div id="result"></div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('#form').submit(function (event){
+            event.preventDefault()
+        });
+        $("#searchButton").click(function(){
+
+            var url = "{{ path('search',{'term': 'term_value' })}}";
+            var term = $('#searchInput').val();
+            url = url.replace("term_value", term);
+
+            $.ajax({
+                url: url,
+                success: function(result){
+                    $("#result").html(result);
+                }
+            });
+        });
+    </script>
+{% endblock %}

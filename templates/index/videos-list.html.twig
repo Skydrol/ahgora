@@ -1,0 +1,5 @@
+<div>
+    {% for video in response.items  %}
+        <li><a href="{{ video.id.videoId }}">{{ video.snippet.title }}</a></li>
+    {% endfor %}
+</div>
