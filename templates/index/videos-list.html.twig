@@ -1,5 +1,19 @@
-<div>
-    {% for video in response.items  %}
-        <li><a href="{{ video.id.videoId }}">{{ video.snippet.title }}</a></li>
-    {% endfor %}
-</div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Palavras mais buscadas</h4>
+            {% for word,key in mostCommomWords %}
+                <button type="button" class="btn btn-primary">
+                    {{ word }} <span class="badge bg-secondary">{{ key }}</span>
+                </button>
+            {% endfor %}
+        </div>
+
+        <div class="col-md-12 mt-3">
+            <h4>Resultados</h4>
+            {% for video in response.items  %}
+                <li><a href="https://www.youtube.com/watch?v={{ video.id.videoId }}">{{ video.snippet.title }}</a></li>
+            {% endfor %}
+        </div>
+
+    </div>

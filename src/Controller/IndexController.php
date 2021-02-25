@@ -28,14 +28,50 @@ class IndexController extends AbstractController
     {
         $response = $youtubeService->search($term);
 
+        $videos = $response['items'];
+        $titlesAndDescriptions = ' ';
+
+        foreach ($videos as $video){
+            $titlesAndDescriptions .= ' '.$video['snippet']['title'];
+            $titlesAndDescriptions .= ' '.$video['snippet']['description'];
+        }
+
+        $titlesAndDescriptions = str_replace('-','',$titlesAndDescriptions);
+
+        $mostCommomWords = $this->getMostCommomWords($titlesAndDescriptions,[$term,'-'],5);
+
 
         return $this->render('index/videos-list.html.twig', [
-            'response' => $response
+            'response' => $response,
+            'titlesAndDescriptions' => $titlesAndDescriptions,
+            'mostCommomWords' => $mostCommomWords
         ]);
 
     }
 
+    public function getMostCommomWords($string, $stop_words, $max_count = 5) {
+        $string = preg_replace('/ss+/i', '', $string);
+        $string = trim($string); // trim the string
+        $string = preg_replace('/[^a-zA-Z -]/', '', $string); // only take alphabet characters, but keep the spaces and dashes too…
+        $string = strtolower($string); // make it lowercase
 
+        preg_match_all('/\b.*?\b/i', $string, $match_words);
+        $match_words = $match_words[0];
+
+        foreach ( $match_words as $key => $item ) {
+            if ( $item == '' || in_array(strtolower($item), $stop_words) || strlen($item) <= 3 ) {
+                unset($match_words[$key]);
+            }
+        }
+
+        $word_count = str_word_count( implode(" ", $match_words) , 1);
+        $frequency = array_count_values($word_count);
+        arsort($frequency);
+
+        //arsort($word_count_arr);
+        $keywords = array_slice($frequency, 0, $max_count);
+        return $keywords;
+    }
 
 
 }

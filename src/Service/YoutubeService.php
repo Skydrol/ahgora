@@ -18,7 +18,7 @@ class YoutubeService
     {
         $apiKey = $this->container->getParameter('api_key');
         $client = HttpClient::create();
-        $response = $client->request('GET', 'https://youtube.googleapis.com/youtube/v3/search?q='.$searchTerm.'&part=snippet&type=video&key='.$apiKey);
+        $response = $client->request('GET', 'https://youtube.googleapis.com/youtube/v3/search?q='.$searchTerm.'&part=snippet&type=video&maxResults=200&key='.$apiKey);
        return $response->toArray();
     }
 }
