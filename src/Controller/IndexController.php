@@ -15,7 +15,6 @@ class IndexController extends AbstractController
     public function index(YoutubeService $youtubeService): Response
     {
 
-
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController'
         ]);
@@ -31,25 +30,28 @@ class IndexController extends AbstractController
         $videos = $response['items'];
         $titlesAndDescriptions = ' ';
 
+        $videosIds = [];
+
         foreach ($videos as $video){
             $titlesAndDescriptions .= ' '.$video['snippet']['title'];
             $titlesAndDescriptions .= ' '.$video['snippet']['description'];
+            $videosIds[] = $video['id']['videoId'];
         }
 
         $titlesAndDescriptions = str_replace('-','',$titlesAndDescriptions);
 
-        $mostCommomWords = $this->getMostCommomWords($titlesAndDescriptions,[$term,'-'],5);
-
+        $mostCommonWords = $this->getMostCommonWords($titlesAndDescriptions,[$term,'-'],5);
+        $contentDetails = $youtubeService->contentDetails($videosIds);
 
         return $this->render('index/videos-list.html.twig', [
             'response' => $response,
-            'titlesAndDescriptions' => $titlesAndDescriptions,
-            'mostCommomWords' => $mostCommomWords
+            'mostCommonWords' => $mostCommonWords,
+            'contentDetails' => $contentDetails['items']
         ]);
 
     }
 
-    public function getMostCommomWords($string, $stop_words, $max_count = 5) {
+    public function getMostCommonWords($string, $stop_words, $max_count = 5) {
         $string = preg_replace('/ss+/i', '', $string);
         $string = trim($string); // trim the string
         $string = preg_replace('/[^a-zA-Z -]/', '', $string); // only take alphabet characters, but keep the spaces and dashes too…
