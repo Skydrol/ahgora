@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\YoutubeService;
@@ -74,6 +75,22 @@ class IndexController extends AbstractController
         $keywords = array_slice($frequency, 0, $max_count);
         return $keywords;
     }
+
+    /**
+     * @Route("/schedule", name="schedule")
+     */
+    public function schedule(Request $request)
+    {
+        if($request->getMethod() == Request::METHOD_POST){
+            var_dump($request->request->all());
+            die;
+        }
+        return $this->render('Schedule/schedule.html.twig', [
+
+        ]);
+    }
+
+
 
 
 }

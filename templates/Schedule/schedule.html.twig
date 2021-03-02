@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center">Tempo disponível diário</h1>
+                <form action="#" method="post">
+                    <div class="form-group">
+                        <label for="segunda">Segunda</label>
+                        <input type="range" min="0" value="0" max="1440" step="1" class="form-control" placeholder="Tempo em minutos" id="segunda" oninput="updateRangeInput(this)">
+                        <input type="text" class="no-border" name="segunda">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="terca">Terça</label>
+                        <input type="range" min="0" value="0" max="1440" step="1" class="form-control" placeholder="Tempo em minutos" id="terca" oninput="updateRangeInput(this)">
+                        <input type="text" class="no-border" name="terca">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quarta">Quarta</label>
+                        <input type="range" min="0" value="0" max="1440" step="1" class="form-control" placeholder="Tempo em minutos" id="quarta" oninput="updateRangeInput(this)">
+                        <input type="text" class="no-border" name="quarta">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quinta">Quinta</label>
+                        <input type="range" min="0" value="0" max="1440" step="1" class="form-control" placeholder="Tempo em minutos" id="quinta" oninput="updateRangeInput(this)">
+                        <input type="text" class="no-border" name="quinta">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sexta">Sexta</label>
+                        <input type="range" min="0" value="0" max="1440" step="1" class="form-control" placeholder="Tempo em minutos" id="sexta" oninput="updateRangeInput(this)">
+                        <input type="text" class="no-border" name="sexta">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sabado">Sábado</label>
+                        <input type="range" min="0" value="0" max="1440" step="1" class="form-control" placeholder="Tempo em minutos" id="sabado" oninput="updateRangeInput(this)">
+                        <input type="text" class="no-border" name="sábado">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="domingo">Domingo</label>
+                        <input type="range" min="0" value="0" max="1440" step="1" class="form-control" placeholder="Tempo em minutos" id="domingo" oninput="updateRangeInput(this)">
+                        <input type="text" class="no-border" name="domingo">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateRangeInput(elem) {
+            $(elem).next().val($(elem).val());
+        }
+    </script>
+
+    <style>
+        .no-border {
+            border: none!important;
+        }
+    </style>
+
+{% endblock %}

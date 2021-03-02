@@ -54,7 +54,7 @@ class Schedule
     /**
      * @return Collection|Video[]
      */
-    public function getVideo(): Collection
+    public function getVideos(): Collection
     {
         return $this->video;
     }
