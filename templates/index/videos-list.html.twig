@@ -13,7 +13,6 @@
             <h4>Resultados</h4>
             <div class="row">
             {% for video in response.items %}
-{#                <li><a href="https://www.youtube.com/watch?v={{ video.id.videoId }}">{{ video.snippet.title }}</a></li>#}
                 <div class="card col-md-3" data-videoid="{{ video.id.videoId }}">
                     <div class="card-image">
                         <div>

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Schedule;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,9 +16,19 @@ class IndexController extends AbstractController
      */
     public function index(YoutubeService $youtubeService): Response
     {
+        $entityManager = $this->getDoctrine()->getManager();
+        $lastSchedule = $entityManager->getRepository(Schedule::class)->findBy([],['id' => 'DESC'],1)[0]->getDailyTimes();
+
+        $lastSchedule = json_decode($lastSchedule,true);
+        foreach ($lastSchedule as $key => $value){
+            if($value == null){
+                $lastSchedule[$key] = 0;
+            }
+        }
 
         return $this->render('index/index.html.twig', [
-            'controller_name' => 'IndexController'
+            'controller_name' => 'IndexController',
+            'lastSchedule' => $lastSchedule
         ]);
     }
 
@@ -82,12 +93,16 @@ class IndexController extends AbstractController
     public function schedule(Request $request)
     {
         if($request->getMethod() == Request::METHOD_POST){
-            var_dump($request->request->all());
-            die;
-        }
-        return $this->render('Schedule/schedule.html.twig', [
+            $allTimes = json_encode($request->request->all());
+            $entityManager = $this->getDoctrine()->getManager();
+            $schedule = new Schedule();
+            $schedule->setDailyTimes($allTimes);
+            $entityManager->persist($schedule);
+            $entityManager->flush();
+            return $this->redirectToRoute('index');
 
-        ]);
+        }
+        return $this->render('Schedule/schedule.html.twig');
     }
 
 

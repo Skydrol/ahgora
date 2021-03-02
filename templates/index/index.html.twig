@@ -2,15 +2,27 @@
 
 {% block body %}
 
-
     <div class="container">
         <h1>Pesquisa</h1>
         <div class="row">
-            <div class="col-md-12">
+            
+            <div class="col-md-6">
                 <form action="" method="post" id="form">
                     <input type="text" id="searchInput">
                     <button id="searchButton">Pesquisar</button>
                 </form>
+            </div>
+            
+            <div class="col-md-6">
+                <a class="btn btn-success" href="{{ path('schedule') }}">Entrar com a meta diária</a>
+                <p class="mt-3 text-center"><b>Sua mais recente meta diária:</b></p>
+                <div class="row">
+                    {% for schedule,key in lastSchedule %}
+                        <div class="col-md-4">
+                            <span class="badge badge-pill badge-warning">{{ schedule }} - {{ key }} minuto(s)</span>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
 
             <div class="col-md-12 mt-2">

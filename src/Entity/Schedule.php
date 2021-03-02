@@ -29,6 +29,11 @@ class Schedule
      */
     private $video;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $dailyTimes;
+
     public function __construct()
     {
         $this->video = new ArrayCollection();
@@ -77,6 +82,18 @@ class Schedule
                 $video->setSchedule(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDailyTimes(): ?string
+    {
+        return $this->dailyTimes;
+    }
+
+    public function setDailyTimes(?string $dailyTimes): self
+    {
+        $this->dailyTimes = $dailyTimes;
 
         return $this;
     }
