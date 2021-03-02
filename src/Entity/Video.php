@@ -28,6 +28,11 @@ class Video
      */
     private $duration;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Schedule::class, inversedBy="video")
+     */
+    private $schedule;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,6 +58,18 @@ class Video
     public function setDuration(Integer $duration): self
     {
         $this->duration = $duration;
+
+        return $this;
+    }
+
+    public function getSchedule(): ?Schedule
+    {
+        return $this->schedule;
+    }
+
+    public function setSchedule(?Schedule $schedule): self
+    {
+        $this->schedule = $schedule;
 
         return $this;
     }
